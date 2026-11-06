@@ -1,6 +1,6 @@
 // TLF App: keeps the app shell on the phone so it opens instantly and can show a friendly offline screen.
 // TLF itself (your data) always comes from Google Apps Script over the network.
-const CACHE = 'tlf-app-v1';
+const CACHE = 'tlf-app-v2';
 const SHELL = ['./', './index.html', './config.js', './manifest.webmanifest', './logo.svg', './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
