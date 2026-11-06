@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TLF</title>
+<meta name="description" content="TLF – Công việc · Học tập · Cuộc sống">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TLF">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F6F7FB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="apple-touch-startup-image" href="splash-1320x2868.png" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1206x2622.png" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<script src="config.js"></script>
+<style>
+  :root{--bg:#F6F7FB;--card:#FFFFFF;--text:#0F172A;--muted:#64748B;--line:#E2E8F0;--pri:#EA580C;--pri2:#E11D48}
+  @media (prefers-color-scheme: dark){:root{--bg:#0B1220;--card:#111A2E;--text:#E2E8F0;--muted:#94A3B8;--line:#1E293B}}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%;overscroll-behavior:none}
+  body{position:fixed;inset:0;overflow:hidden}
+  #app{position:fixed;left:0;right:0;top:0;bottom:env(safe-area-inset-bottom);width:100%;height:calc(100% - env(safe-area-inset-bottom));border:0;background:var(--bg);opacity:0;transition:opacity .35s}
+  #app.ready{opacity:1}
+  .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;z-index:2;background:var(--bg);transition:opacity .35s}
+  .screen[hidden]{display:none}
+  .screen.fade{opacity:0;pointer-events:none}
+  .logo{width:96px;height:96px;filter:drop-shadow(0 12px 24px rgba(225,29,72,.25))}
+  h1{margin:16px 0 4px;font-size:28px;letter-spacing:2px}
+  p{margin:6px 0;color:var(--muted);font-size:15px;line-height:1.5;max-width:340px}
+  .spin{width:26px;height:26px;margin-top:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--pri);animation:sp .8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .box{width:100%;max-width:380px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:18px;text-align:left}
+  label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
+  input{width:100%;font:inherit;font-size:16px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+  button{font:inherit;font-weight:700;font-size:16px;border:0;border-radius:12px;padding:13px 18px;cursor:pointer}
+  .pri{width:100%;margin-top:12px;color:#fff;background:linear-gradient(135deg,#FB923C,var(--pri2))}
+  .ghost{background:transparent;color:var(--pri);padding:10px}
+  .err{color:#DC2626;font-size:13px;margin-top:8px;min-height:18px}
+  ol{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:13.5px;line-height:1.6}
+  .slow{margin-top:14px;font-size:14px}
+</style>
+</head>
+<body>
+<div id="boot" class="screen">
+  <img class="logo" src="logo.svg" alt="">
+  <h1>TLF</h1>
+  <p>Công việc · Học tập · Cuộc sống</p>
+  <div class="spin" aria-label="Đang mở"></div>
+  <div class="slow" id="slow" hidden><p>Mạng hơi chậm, TLF vẫn đang mở…</p><button class="ghost" onclick="reloadApp()">Thử lại</button></div>
+</div>
+
+<div id="setup" class="screen" hidden>
+  <img class="logo" src="logo.svg" alt="">
+  <h1>TLF App</h1>
+  <p>Dán link Web app TLF của bạn (link kết thúc bằng <b>/exec</b>).</p>
+  <form class="box" id="setupForm">
+    <label for="url">Link Web app</label>
+    <input id="url" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec">
+    <div class="err" id="err"></div>
+    <button class="pri" type="submit">Mở TLF</button>
+    <ol>
+      <li>Mở Apps Script của TLF → <b>Deploy</b> → <b>Manage deployments</b>.</li>
+      <li>Sao chép <b>Web app URL</b> rồi dán vào ô trên.</li>
+    </ol>
+  </form>
+</div>
+
+<div id="offline" class="screen" hidden>
+  <img class="logo" src="logo.svg" alt="">
+  <h1>Chưa có mạng</h1>
+  <p>TLF cần Internet để lấy dữ liệu từ Google Sheets của bạn. Kiểm tra Wi-Fi hoặc 4G rồi thử lại.</p>
+  <button class="pri" style="max-width:320px" onclick="reloadApp()">Thử lại</button>
+  <button class="ghost" onclick="showSetup()">Đổi link TLF</button>
+</div>
+
+<iframe id="app" title="TLF" allow="clipboard-read; clipboard-write; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+<script>
+(function () {
+  'use strict';
+  var KEY_URL = 'tlf-app-url', KEY_TOKEN = 'tlf-app-session';
+  var $ = function (id) { return document.getElementById(id); };
+  var frame = $('app'), slowTimer = 0, loaded = false;
+  // Only real TLF deployments: script.google.com/macros/s/<id>/exec (also Google Workspace: /a/macros/<domain>/s/<id>/exec)
+  var URL_RE = /^https:\/\/script\.google\.com\/(a\/macros\/[^\/]+|macros)\/s\/[A-Za-z0-9_-]{20,}\/exec\/?$/;
+  function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+  function read(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+  function appUrl() { var u = String(window.TLF_URL || '').trim() || read(KEY_URL); return URL_RE.test(u) ? u.replace(/\/$/, '') : ''; }
+  function show(id) { ['boot', 'setup', 'offline'].forEach(function (s) { $(s).hidden = s !== id; $(s).classList.remove('fade'); }); }
+  window.showSetup = function () { $('url').value = appUrl(); show('setup'); };
+  window.reloadApp = function () { start(true); };
+  function start(force) {
+    var u = appUrl();
+    if (!u) { show('setup'); return; }
+    if (!navigator.onLine) { show('offline'); return; }
+    show('boot'); $('slow').hidden = true; loaded = false; frame.classList.remove('ready');
+    clearTimeout(slowTimer); slowTimer = setTimeout(function () { if (!loaded) $('slow').hidden = false; }, 12000);
+    var src = u + '?app=1';
+    if (force || frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+  }
+  frame.addEventListener('load', function () {
+    if (!frame.getAttribute('src')) return;
+    loaded = true; clearTimeout(slowTimer);
+    setTimeout(function () { frame.classList.add('ready'); $('boot').classList.add('fade'); setTimeout(function () { $('boot').hidden = true; }, 400); }, 500);
+  });
+  $('setupForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var u = $('url').value.trim();
+    if (!URL_RE.test(u)) { $('err').textContent = 'Link chưa đúng. Link Web app có dạng https://script.google.com/macros/s/…/exec'; return; }
+    $('err').textContent = ''; store(KEY_URL, u.replace(/\/$/, '')); start(true);
+  });
+  window.addEventListener('online', function () { if (!$('offline').hidden) start(true); });
+  // Session bridge: TLF (inside the frame, served from *.googleusercontent.com) keeps a copy of its sign-in here,
+  // because Safari may clear storage inside frames. TLF only sends it after you trust this app in TLF → Cài đặt.
+  window.addEventListener('message', function (e) {
+    if (!/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.googleusercontent\.com$/.test(e.origin)) return;
+    var d = e.data || {};
+    if (!d || d.tlf !== 1) return;
+    if (d.type === 'token') {
+      if (d.token && typeof d.token === 'string' && Number(d.exp) > Date.now()) store(KEY_TOKEN, JSON.stringify({ t: d.token, exp: Number(d.exp) }));
+      else store(KEY_TOKEN, null);
+    } else if (d.type === 'hello') {
+      var s = null; try { s = JSON.parse(read(KEY_TOKEN) || 'null'); } catch (x) {}
+      var ok = s && s.t && Number(s.exp) > Date.now();
+      if (e.source) e.source.postMessage({ tlf: 1, type: 'restore', token: ok ? s.t : '', exp: ok ? s.exp : 0 }, e.origin);
+    }
+  });
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
+  start(false);
+})();
+</script>
+</body>
+</html>
