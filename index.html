@@ -26,7 +26,6 @@
 <link rel="apple-touch-startup-image" href="splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-<script src="config.js"></script>
 <style>
   :root{--bg:#F6F7FB;--card:#FFFFFF;--text:#0F172A;--muted:#64748B;--line:#E2E8F0;--pri:#EA580C;--pri2:#E11D48}
   @media (prefers-color-scheme: dark){:root{--bg:#0B1220;--card:#111A2E;--text:#E2E8F0;--muted:#94A3B8;--line:#1E293B}}
@@ -99,7 +98,22 @@
   var URL_RE = /^https:\/\/script\.google\.com\/(a\/macros\/[^\/]+|macros)\/s\/[A-Za-z0-9_-]{20,}\/exec\/?$/;
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function read(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
-  function appUrl() { var u = String(window.TLF_URL || '').trim() || read(KEY_URL); return URL_RE.test(u) ? u.replace(/\/$/, '') : ''; }
+  var cfgUrl = '';   // link found in config.js (read as text, so a typo in that file cannot break the app)
+  function clean(u) { u = String(u || '').trim().replace(/[?#].*$/, '').replace(/\/$/, ''); return URL_RE.test(u + '') ? u : ''; }
+  function appUrl() { return clean(cfgUrl) || clean(read(KEY_URL)); }
+  /** Reads config.js fresh from GitHub (the ?t= part skips old cached copies), then starts. */
+  function loadConfig(done) {
+    var fin = false, end = function () { if (!fin) { fin = true; done(); } };
+    setTimeout(end, 4000);
+    try {
+      fetch('config.js?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (txt) {
+        var m = String(txt || '').match(/https:\/\/script\.google\.com\/[^\s'"`<>]+?\/exec/);
+        if (m && clean(m[0])) { cfgUrl = clean(m[0]); store(KEY_URL, cfgUrl); }
+        else if (/script\.google\.com/.test(txt || '')) $('err').textContent = 'config.js có link nhưng chưa đúng dạng …/exec. Kiểm tra lại link trong config.js hoặc dán link vào ô dưới.';
+        end();
+      }).catch(end);
+    } catch (e) { end(); }
+  }
   function show(id) { ['boot', 'setup', 'offline'].forEach(function (s) { $(s).hidden = s !== id; $(s).classList.remove('fade'); }); }
   window.showSetup = function () { $('url').value = appUrl(); show('setup'); };
   window.reloadApp = function () { start(true); };
@@ -119,8 +133,8 @@
   });
   $('setupForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    var u = $('url').value.trim();
-    if (!URL_RE.test(u)) { $('err').textContent = 'Link chưa đúng. Link Web app có dạng https://script.google.com/macros/s/…/exec'; return; }
+    var u = clean($('url').value);
+    if (!u) { $('err').textContent = 'Link chưa đúng. Link Web app có dạng https://script.google.com/macros/s/…/exec'; return; }
     $('err').textContent = ''; store(KEY_URL, u.replace(/\/$/, '')); start(true);
   });
   window.addEventListener('online', function () { if (!$('offline').hidden) start(true); });
@@ -140,7 +154,7 @@
     }
   });
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
-  start(false);
+  loadConfig(function () { start(false); });
 })();
 </script>
 </body>
