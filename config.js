@@ -1,3 +1,1 @@
-// Dán link Web app TLF của bạn vào giữa hai dấu nháy (link kết thúc bằng /exec).
-// Có thể để trống: lần đầu mở app, TLF App sẽ hỏi link.
-window.TLF_URL = 'https://script.google.com/macros/s/AKfycbx……/exec';
+window.TLF_URL = 'https://script.google.com/macros/s/AKfycbxytC2ZqW77DfJVQa7BX-GR10A3ndhDkVIX60bw9k_OH16kkxcnaSt1cWLwxBudz6DL1Q/exec';
