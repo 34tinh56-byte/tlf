@@ -8,7 +8,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TLF">
-<meta name="theme-color" content="#FB923C" id="themeColor">
+<meta name="theme-color" content="#EA580C" id="themeColor">
+<script>
+  // status bar colour: the TLF theme colour remembered from the last run (iPhone reads it while the app starts)
+  try { var tc = localStorage.getItem('tlf-theme-color'); if (tc && /^(rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\)|#[0-9a-fA-F]{3,8})$/.test(tc)) { document.getElementById('themeColor').setAttribute('content', tc); document.documentElement.style.background = tc; } } catch (e) {}
+</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -28,7 +32,7 @@
   :root{--bg:#F6F7FB;--card:#FFFFFF;--text:#0F172A;--muted:#64748B;--line:#E2E8F0;--pri:#EA580C;--pri2:#E11D48;--brand:linear-gradient(160deg,#FB923C 0%,#F97316 38%,#E11D48 100%)}
   @media (prefers-color-scheme: dark){:root{--bg:#0B1220;--card:#111A2E;--text:#E2E8F0;--muted:#94A3B8;--line:#1E293B}}
   *{box-sizing:border-box}
-  html{background:#FB923C}
+  html{background:#EA580C}
   html,body{margin:0;height:100%;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%;overscroll-behavior:none}
   body{position:fixed;inset:0;overflow:hidden;background:var(--brand)}
   #app{position:fixed;left:0;top:0;width:1px;min-width:100%;height:100%;border:0;background:var(--bg);opacity:0;transition:opacity .35s}
@@ -111,7 +115,9 @@
   // status bar colour = TLF header colour
   function setTheme(c) {
     if (!/^(rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\)|#[0-9a-fA-F]{3,8})$/.test(c)) return;
-    $('themeColor').setAttribute('content', c);
+    try { localStorage.setItem('tlf-theme-color', c); } catch (x) {}
+    var old = $('themeColor'), m = document.createElement('meta');   // a fresh tag: iOS notices a new tag more readily than a changed one
+    m.name = 'theme-color'; m.id = 'themeColor'; m.content = c; old.parentNode.replaceChild(m, old);
     document.documentElement.style.background = c; document.body.style.background = c;
   }
   function sizeFrame() { frame.style.height = (screenH() + extra) + 'px'; }
