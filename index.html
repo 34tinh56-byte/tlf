@@ -106,8 +106,15 @@
   var tlfWin = null, tlfOrigin = '';
   function insets() { var c = getComputedStyle($('sa')), n = function (v) { return Math.round(parseFloat(v) || 0); }; return { top: n(c.paddingTop), bottom: n(c.paddingBottom), left: n(c.paddingLeft), right: n(c.paddingRight) }; }
   function sendInsets() { if (!tlfWin) return; var i = insets(); try { tlfWin.postMessage({ tlf: 1, type: 'insets', top: i.top, bottom: i.bottom, left: i.left, right: i.right }, tlfOrigin); } catch (x) {} }
-  window.addEventListener('resize', function () { setTimeout(sendInsets, 60); });
-  window.addEventListener('orientationchange', function () { setTimeout(sendInsets, 300); });   // link found in config.js (read as text, so a typo in that file cannot break the app)
+  var extra = 0;
+  function screenH() {
+    var sh = 0, portrait = window.innerHeight >= window.innerWidth;
+    if (window.navigator.standalone === true && screen.height) sh = portrait ? Math.max(screen.height, screen.width) : Math.min(screen.height, screen.width);
+    return Math.max(window.innerHeight || 0, document.documentElement.clientHeight || 0, sh);
+  }
+  function sizeFrame() { frame.style.height = (screenH() + extra) + 'px'; }
+  window.addEventListener('resize', function () { sizeFrame(); setTimeout(sendInsets, 60); });
+  window.addEventListener('orientationchange', function () { extra = 0; setTimeout(function () { sizeFrame(); sendInsets(); }, 300); });   // link found in config.js (read as text, so a typo in that file cannot break the app)
   function clean(u) { u = String(u || '').trim().replace(/[?#].*$/, '').replace(/\/$/, ''); return URL_RE.test(u + '') ? u : ''; }
   function appUrl() { return clean(cfgUrl) || clean(read(KEY_URL)); }
   /** Reads config.js fresh from GitHub (the ?t= part skips old cached copies), then starts. */
@@ -158,6 +165,10 @@
       else store(KEY_TOKEN, null);
     } else if (d.type === 'ui') {
       tlfWin = e.source; tlfOrigin = e.origin; sendInsets();
+      // iPhone (full-screen app): Google's page inside the frame can come out shorter than the screen
+      // (by the status-bar height). TLF tells us the height it really got; grow the frame by the difference.
+      var h = Number(d.h);
+      if (h > 0) { var gap = screenH() - h; if (Math.abs(gap) > 1 && Math.abs(gap) <= 160) { extra = Math.max(0, Math.min(160, extra + gap)); sizeFrame(); } }
     } else if (d.type === 'hello') {
       var s = null; try { s = JSON.parse(read(KEY_TOKEN) || 'null'); } catch (x) {}
       var ok = s && s.t && Number(s.exp) > Date.now();
@@ -165,6 +176,7 @@
     }
   });
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
+  sizeFrame();
   loadConfig(function () { start(false); });
 })();
 </script>
