@@ -57,16 +57,107 @@
   .err{color:#FEE2E2;font-size:13px;margin-top:8px;min-height:18px}
   ol{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:13.5px;line-height:1.6}
   .slow{margin-top:14px;font-size:14px}
+  /* V6.4.3: the same splash as inside TLF, so opening the app flows straight into TLF's own start screen */
+  #boot{padding:0;background:none}
+  #slow{position:fixed;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom));z-index:2147483001;display:flex;flex-direction:column;align-items:center}
+  #slow[hidden]{display:none}
+  #slow p{margin:0 0 4px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.25)}
+#tlfBoot{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;background:linear-gradient(155deg,var(--tb1,#FB923C) 0%,var(--tb2,#E11D48) 100%);font-family:'Be Vietnam Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;transition:opacity .55s ease,transform .55s ease;-webkit-user-select:none;user-select:none}
+#tlfBoot.out{opacity:0;transform:scale(1.04);pointer-events:none}
+#tlfBoot:before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 0%,rgba(255,255,255,.18),transparent 60%);pointer-events:none}
+#tlfBoot.tb-night:before{background:linear-gradient(180deg,rgba(15,23,42,.62),rgba(30,27,75,.28))}
+#tlfBoot.tb-evening:before{background:linear-gradient(180deg,rgba(124,45,18,.18),rgba(76,29,149,.22))}
+.tb-pat{position:absolute;inset:-80px;opacity:.55;pointer-events:none;animation:tbDrift 30s linear infinite}
+.tb-morning .tb-pat{background:repeating-conic-gradient(from 0deg at 50% 112%,rgba(255,255,255,.14) 0 5deg,transparent 5deg 15deg)}
+.tb-day .tb-pat{background-image:radial-gradient(rgba(255,255,255,.26) 1.7px,transparent 2.2px),radial-gradient(rgba(255,255,255,.13) 1px,transparent 1.6px);background-size:30px 30px,15px 15px;background-position:0 0,7px 7px}
+.tb-evening .tb-pat{background-image:repeating-radial-gradient(circle at 15% 115%,rgba(255,255,255,.15) 0 2px,transparent 2px 28px),repeating-radial-gradient(circle at 95% -10%,rgba(255,255,255,.08) 0 1px,transparent 1px 22px)}
+.tb-night .tb-pat{opacity:.9;background-image:radial-gradient(1.6px 1.6px at 12% 18%,#fff 60%,transparent 70%),radial-gradient(1.2px 1.2px at 68% 12%,#fff 60%,transparent 70%),radial-gradient(2px 2px at 82% 46%,#fff 60%,transparent 70%),radial-gradient(1.1px 1.1px at 36% 64%,#fff 60%,transparent 70%),radial-gradient(1.5px 1.5px at 54% 88%,#fff 60%,transparent 70%),radial-gradient(1px 1px at 92% 82%,#fff 60%,transparent 70%),radial-gradient(1.3px 1.3px at 24% 92%,#fff 60%,transparent 70%);background-size:260px 260px;animation:tbDrift 60s linear infinite,tbTwinkle 3.2s ease-in-out infinite alternate}
+.tb-blob{position:absolute;border-radius:50%;filter:blur(46px);opacity:.42;pointer-events:none;animation:tbFloat 13s ease-in-out infinite alternate}
+.tb-blob.b1{width:360px;height:360px;background:#FDE68A;top:-120px;left:-90px}
+.tb-blob.b2{width:320px;height:320px;background:#F0ABFC;bottom:-120px;right:-80px;animation-delay:-4s}
+.tb-blob.b3{width:240px;height:240px;background:#FECDD3;top:58%;left:-90px;animation-delay:-8s}
+.tb-night .tb-blob{opacity:.25}
+.tb-deco{position:absolute;top:calc(34px + env(safe-area-inset-top,0px));right:30px;font-size:58px;opacity:.85;filter:drop-shadow(0 8px 18px rgba(0,0,0,.18));animation:tbFloat 7s ease-in-out infinite alternate}
+.tb-c{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px;max-width:92vw}
+.tb-orbit{position:relative;width:210px;height:210px;display:grid;place-items:center}
+.tb-ring{position:absolute;inset:0;border-radius:50%;border:1.5px dashed rgba(255,255,255,.5);animation:tbSpin 24s linear infinite}
+.tb-ring2{position:absolute;inset:30px;border-radius:50%;border:1px solid rgba(255,255,255,.28);box-shadow:0 0 60px rgba(255,255,255,.18) inset}
+.tb-sats{position:absolute;inset:0;animation:tbSpin 14s linear infinite}
+.tb-sat{position:absolute;width:42px;height:42px;margin:-21px;border-radius:15px;background:rgba(255,255,255,.94);display:grid;place-items:center;font-size:21px;line-height:1;box-shadow:0 10px 22px rgba(0,0,0,.16);animation:tbSpin 14s linear infinite reverse}
+.tb-sat.s1{left:50%;top:0}
+.tb-sat.s2{left:93.3%;top:75%}
+.tb-sat.s3{left:6.7%;top:75%}
+.tb-logo{width:96px;height:96px;border-radius:28px;box-shadow:0 0 0 6px rgba(255,255,255,.26);filter:drop-shadow(0 18px 30px rgba(0,0,0,.26));animation:tbPulse 2.6s ease-in-out infinite}
+.tb-logo svg,.tb-logo img{display:block;width:100%;height:100%}
+.tb-t{margin:34px 0 2px;font-size:34px;font-weight:800;letter-spacing:7px;line-height:1.1}
+.tb-tag{margin:2px 0 0;font-size:14px;letter-spacing:.3px}
+.tb-tag span{display:inline-block;opacity:.8;animation:tbGlow 3.6s ease-in-out infinite}
+.tb-tag span:nth-child(2){animation-delay:1.2s}
+.tb-tag span:nth-child(3){animation-delay:2.4s}
+.tb-hi{margin:18px 0 0;font-size:17px;font-weight:700;min-height:22px}
+.tb-bar{position:relative;width:210px;height:6px;border-radius:99px;background:rgba(255,255,255,.26);overflow:hidden;margin-top:16px}
+.tb-bar i{position:absolute;top:0;bottom:0;left:0;width:42%;border-radius:inherit;background:#fff;animation:tbLoad 1.5s ease-in-out infinite}
+.tb-step{margin:10px 0 0;font-size:12.5px;opacity:.88;min-height:18px;transition:opacity .25s}
+.tb-quote{position:absolute;left:24px;right:24px;bottom:calc(28px + env(safe-area-inset-bottom,0px));margin:0 auto;max-width:520px;text-align:center;font-size:13.5px;line-height:1.55;opacity:.92}
+.tb-quote b{display:block;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;opacity:.8;margin-bottom:3px}
+@keyframes tbSpin{to{transform:rotate(360deg)}}
+@keyframes tbDrift{from{transform:translate3d(0,0,0)}to{transform:translate3d(60px,40px,0)}}
+@keyframes tbFloat{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(30px,-24px,0) scale(1.08)}}
+@keyframes tbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes tbGlow{0%,100%{opacity:.72}35%{opacity:1;text-shadow:0 0 14px rgba(255,255,255,.75)}}
+@keyframes tbLoad{0%{left:-45%}100%{left:105%}}
+@keyframes tbTwinkle{from{opacity:.55}to{opacity:1}}
+@media (max-width:420px){.tb-orbit{width:184px;height:184px}.tb-logo{width:84px;height:84px}.tb-t{font-size:30px}.tb-deco{font-size:46px;right:20px}}
+@media (prefers-reduced-motion:reduce){#tlfBoot *,#tlfBoot:before{animation:none!important}}
 </style>
 </head>
 <body>
+<script>
+  // V6.4.3: splash colours – what TLF sent last time (tlf-boot), else derived from the remembered status-bar colour
+  (function () {
+    try {
+      if (localStorage.getItem('tlf-boot')) return;
+      var tc = localStorage.getItem('tlf-theme-color') || '', m = /^rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)$/.exec(tc), h = /^#([0-9a-fA-F]{6})$/.exec(tc);
+      var r, g, b; if (m) { r = +m[1]; g = +m[2]; b = +m[3]; } else if (h) { var n = parseInt(h[1], 16); r = n >> 16 & 255; g = n >> 8 & 255; b = n & 255; } else return;
+      var hex = function (x, y, z) { return '#' + [x, y, z].map(function (v) { v = Math.max(0, Math.min(255, Math.round(v))); return ('0' + v.toString(16)).slice(-2); }).join(''); };
+      window.__tlfPaint = { p: hex(r + (255 - r) * .12, g + (255 - g) * .12, b + (255 - b) * .12), p2: hex(r * .72 + 60, g * .55, b * .7 + 40) };
+    } catch (e) { /* defaults */ }
+  })();
+</script>
 <div id="boot" class="screen">
-  <img class="logo" src="logo.svg" alt="">
-  <h1>TLF</h1>
-  <p>Công việc · Học tập · Cuộc sống</p>
-  <div class="spin" aria-label="Đang mở"></div>
+  <div id="tlfBoot" role="status" aria-label="TLF đang mở"><div class="tb-pat"></div><i class="tb-blob b1"></i><i class="tb-blob b2"></i><i class="tb-blob b3"></i><span class="tb-deco" id="tbDeco" aria-hidden="true"></span>
+    <div class="tb-c"><div class="tb-orbit"><i class="tb-ring"></i><i class="tb-ring2"></i><div class="tb-sats"><span class="tb-sat s1" title="Công việc">💼</span><span class="tb-sat s2" title="Học tập">📚</span><span class="tb-sat s3" title="Cuộc sống">🌿</span></div><div class="tb-logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="tbLg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--primary,#FB923C)"/><stop offset="1" style="stop-color:var(--primary-2,#E11D48)"/></linearGradient></defs><rect width="48" height="48" rx="14" fill="url(#tbLg)"/><path d="M8 10c10-6 26-6 32 0" stroke="#fff" stroke-opacity=".18" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M12.5 35.5C12 21 21 12.5 36 12c.8 14.5-8 23.5-23.5 23.5z" fill="#fff"/><path d="M12.5 35.5l9-9" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M19.5 25.5l4 4 8.5-9.5" stroke="url(#tbLg)" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="37" cy="33" r="2.6" fill="#fff" fill-opacity=".85"/></svg></div></div>
+      <div class="tb-t">TLF</div><p class="tb-tag"><span>Công việc</span> · <span>Học tập</span> · <span>Cuộc sống</span></p><p class="tb-hi" id="tbHi"></p><div class="tb-bar"><i></i></div><p class="tb-step" id="tbStep"></p></div>
+    <p class="tb-quote" id="tbQuote"></p></div>
   <div class="slow" id="slow" hidden><p>Mạng hơi chậm, TLF vẫn đang mở…</p><button class="ghost" onclick="reloadApp()">Thử lại</button></div>
 </div>
+<script>
+(function () {
+  var b = document.getElementById('tlfBoot'); if (!b) return;
+  window.__tlfBootT0 = Date.now();
+  var h = new Date().getHours(), part = h >= 5 && h < 11 ? 'morning' : h >= 11 && h < 17 ? 'day' : h >= 17 && h < 20 ? 'evening' : 'night';
+  b.className += ' tb-' + part;
+  var cfg = {}; try { cfg = JSON.parse(localStorage.getItem('tlf-boot') || '{}') || {}; } catch (e) { cfg = {}; }
+  var p = window.__tlfPaint || {}, c1 = cfg.p || p.p, c2 = cfg.p2 || p.p2, ok = function (c) { return /^(#[0-9a-fA-F]{3,8}|rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\))$/.test(c || ''); };
+  if (ok(c1)) { b.style.setProperty('--tb1', c1); b.style.setProperty('--primary', c1); }
+  if (ok(c2)) { b.style.setProperty('--tb2', c2); b.style.setProperty('--primary-2', c2); }
+  var late = h >= 23 || h < 5, hi = late ? 'Khuya rồi' : { morning: 'Chào buổi sáng', day: 'Chào buổi chiều', evening: 'Chào buổi tối', night: 'Chào buổi tối' }[part];
+  if (h >= 11 && h < 13) hi = 'Chào buổi trưa';
+  var name = String(cfg.name || '').slice(0, 30), el = function (id) { return document.getElementById(id); };
+  if (el('tbHi')) el('tbHi').textContent = hi + (name ? ', ' + name : '') + (late ? ' – nhớ nghỉ ngơi nhé 🌙' : ' 👋');
+  if (el('tbDeco')) el('tbDeco').textContent = { morning: '🌤️', day: '☀️', evening: '🌇', night: '🌙' }[part];
+  var Q = [['Mỗi ngày một chút', 'việc nhỏ làm đều đặn sẽ thành thành quả lớn.'], ['Hôm nay', 'chỉ cần tốt hơn hôm qua một chút là đủ.'], ['Kế hoạch rõ ràng', 'đầu óc nhẹ nhàng.'],
+    ['Nghỉ ngơi', 'cũng là một phần của tiến bộ.'], ['Tiết kiệm từ khoản nhỏ', 'an tâm cho những ngày lớn.'], ['Người thương', 'dành cho họ chút thời gian hôm nay nhé.'],
+    ['Học một chút mỗi ngày', 'hiểu sâu theo thời gian.'], ['Bắt đầu từ việc dễ nhất', 'để lấy đà cho cả ngày.'], ['Uống đủ nước', 'và nhớ mỉm cười nhé.'],
+    ['Mẹo', 'gõ “Viết báo cáo mai 8h-10h” để tạo việc có giờ bắt đầu.'], ['Mẹo', 'gõ “ăn trưa 45k” ở ô thêm nhanh để ghi chi tiêu.'], ['Mẹo', 'Lịch → ✨ Xếp việc vào giờ trống để TLF tự tìm giờ làm việc.'],
+    ['Mẹo', 'bật “Tự động ghi” cho khoản chi hằng ngày trong Lịch trình chi tiêu.'], ['Một ngày được sắp xếp', 'là một ngày nhẹ nhõm.']];
+  var q = Q[Math.floor(Math.random() * Q.length)];
+  if (el('tbQuote')) el('tbQuote').innerHTML = '<b>' + q[0] + '</b>' + q[1];
+  var steps = ['Đang mở không gian của bạn…', 'Đang đồng bộ với Google Sheets…', 'Đang sắp xếp lịch hôm nay…', 'Sắp xong rồi…'], i = 0;
+  var st = el('tbStep'); if (st) st.textContent = steps[0];
+  window.__tlfBootIv = setInterval(function () { if (!st || i >= steps.length - 1) return; i++; st.style.opacity = 0; setTimeout(function () { st.textContent = steps[i]; st.style.opacity = .88; }, 220); }, 1700);
+})();
+</script>
 
 <div id="setup" class="screen" hidden>
   <img class="logo" src="logo.svg" alt="">
@@ -153,7 +244,7 @@
   frame.addEventListener('load', function () {
     if (!frame.getAttribute('src')) return;
     loaded = true; clearTimeout(slowTimer);
-    setTimeout(function () { frame.classList.add('ready'); $('boot').classList.add('fade'); setTimeout(function () { $('boot').hidden = true; }, 400); }, 500);
+    setTimeout(function () { frame.classList.add('ready'); $('boot').classList.add('fade'); setTimeout(function () { $('boot').hidden = true; clearInterval(window.__tlfBootIv); }, 400); }, 500);
   });
   $('setupForm').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -173,6 +264,10 @@
       else store(KEY_TOKEN, null);
     } else if (d.type === 'theme') {
       setTheme(String(d.color || ''));
+    } else if (d.type === 'boot') {
+      // V6.4.3: colours and first name for the start screen next time (checked: colours only, a short plain name)
+      var C = /^(#[0-9a-fA-F]{3,8}|rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\))$/, p1 = String(d.p || ''), p2 = String(d.p2 || ''), nm = String(d.name || '').replace(/[<>&"'\u0000-\u001f]/g, '').slice(0, 30);
+      if (C.test(p1) && C.test(p2)) store('tlf-boot', JSON.stringify({ p: p1, p2: p2, name: nm }));
     } else if (d.type === 'ui') {
       tlfWin = e.source; tlfOrigin = e.origin; sendInsets();
       // iPhone (full-screen app): Google's page inside the frame can come out shorter than the screen
