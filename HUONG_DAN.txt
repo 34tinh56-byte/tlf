@@ -1,0 +1,15 @@
+TLF App iPhone – cập nhật V6.4.9 (logo mới, màn hình chờ nền đêm)
+
+Bước này KHÔNG bắt buộc: TLF bên trong app đã đổi giao diện ngay khi bạn dán code V6.4.9 vào Apps Script.
+Làm thêm bước này để biểu tượng trên màn hình chính, ảnh khởi động và màn hình chờ của app cũng đổi theo.
+
+1. Trên GitHub, mở repo của app (34tinh56-byte/tlf) → Add file → Upload files.
+2. Kéo thả TẤT CẢ các file trong thư mục iphone này (ghi đè file cũ) → Commit changes:
+   index.html, sw.js, manifest.webmanifest, logo.svg, apple-touch-icon.png, icon-192.png, icon-512.png,
+   icon-maskable-512.png, favicon-32.png và 12 ảnh splash-*.png.
+   KHÔNG xóa hay sửa config.js (chứa link TLF của bạn) – thư mục này cố ý không có file đó.
+3. Đợi 1–2 phút cho GitHub Pages cập nhật, rồi trên iPhone mở app một lần khi có mạng
+   (đóng hẳn app rồi mở lại nếu vẫn thấy màn hình cũ).
+4. iOS chỉ đọc biểu tượng và ảnh khởi động lúc "Thêm vào Màn hình chính": muốn thấy logo mới,
+   xóa biểu tượng TLF cũ, mở link app bằng Safari → Chia sẻ → Thêm vào MH chính.
+   (Đăng nhập lại một lần nếu app hỏi – dữ liệu vẫn nằm trong Google Sheets của bạn.)

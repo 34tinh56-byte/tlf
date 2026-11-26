@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TLF">
-<meta name="theme-color" content="#EA580C" id="themeColor">
+<meta name="theme-color" content="#0A0D14" id="themeColor">
 <script>
   // status bar colour: the TLF theme colour remembered from the last run (iPhone reads it while the app starts)
   try { var tc = localStorage.getItem('tlf-theme-color'); if (tc && /^(rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\)|#[0-9a-fA-F]{3,8})$/.test(tc)) { document.getElementById('themeColor').setAttribute('content', tc); document.documentElement.style.background = tc; } } catch (e) {}
@@ -29,10 +29,10 @@
 <link rel="apple-touch-startup-image" href="splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <style>
-  :root{--bg:#F6F7FB;--card:#FFFFFF;--text:#0F172A;--muted:#64748B;--line:#E2E8F0;--pri:#EA580C;--pri2:#E11D48;--brand:linear-gradient(160deg,#FB923C 0%,#F97316 38%,#E11D48 100%)}
+  :root{--bg:#F6F7FB;--card:#FFFFFF;--text:#0F172A;--muted:#64748B;--line:#E2E8F0;--pri:#EA580C;--pri2:#E11D48;--brand:radial-gradient(120% 70% at 50% 0%,#18203A 0%,#090C14 55%,#05070B 100%)}
   @media (prefers-color-scheme: dark){:root{--bg:#0B1220;--card:#111A2E;--text:#E2E8F0;--muted:#94A3B8;--line:#1E293B}}
   *{box-sizing:border-box}
-  html{background:#EA580C}
+  html{background:#05070B}
   html,body{margin:0;height:100%;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%;overscroll-behavior:none}
   body{position:fixed;inset:0;overflow:hidden;background:var(--brand)}
   #app{position:fixed;left:0;top:0;width:1px;min-width:100%;height:100%;border:0;background:var(--bg);opacity:0;transition:opacity .35s}
@@ -41,12 +41,12 @@
   .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(24px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));text-align:center;z-index:2;background:var(--brand);color:#fff;transition:opacity .35s;overflow:auto}
   .screen[hidden]{display:none}
   .screen.fade{opacity:0;pointer-events:none}
-  .logo{width:96px;height:96px;filter:drop-shadow(0 14px 28px rgba(124,20,40,.35))}
+  .logo{width:96px;height:96px;filter:drop-shadow(0 0 22px rgba(242,107,58,.45)) drop-shadow(0 12px 26px rgba(0,0,0,.6))}
   h1{margin:16px 0 4px;font-size:28px;letter-spacing:2px}
   p{margin:6px 0;color:rgba(255,255,255,.86);font-size:15px;line-height:1.5;max-width:340px}
   .spin{width:26px;height:26px;margin-top:22px;border-radius:50%;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .8s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .box{width:100%;max-width:380px;background:var(--card);color:var(--text);box-shadow:0 20px 50px rgba(124,20,40,.3);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:18px;text-align:left}
+  .box{width:100%;max-width:380px;background:var(--card);color:var(--text);box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 50px -20px rgba(242,107,58,.35);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:18px;text-align:left}
   label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
   input{width:100%;font:inherit;font-size:16px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
   button{font:inherit;font-weight:700;font-size:16px;border:0;border-radius:12px;padding:13px 18px;cursor:pointer}
@@ -57,58 +57,38 @@
   .err{color:#FEE2E2;font-size:13px;margin-top:8px;min-height:18px}
   ol{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:13.5px;line-height:1.6}
   .slow{margin-top:14px;font-size:14px}
-  /* V6.4.3: the same splash as inside TLF, so opening the app flows straight into TLF's own start screen */
+  /* V6.4.9: the same night splash as inside TLF, so opening the app flows straight into TLF's own start screen */
   #boot{padding:0;background:none}
   #slow{position:fixed;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom));z-index:2147483001;display:flex;flex-direction:column;align-items:center}
   #slow[hidden]{display:none}
   #slow p{margin:0 0 4px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.25)}
-#tlfBoot{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;background:linear-gradient(155deg,var(--tb1,#FB923C) 0%,var(--tb2,#E11D48) 100%);font-family:'Be Vietnam Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;transition:opacity .55s ease,transform .55s ease;-webkit-user-select:none;user-select:none}
-#tlfBoot.out{opacity:0;transform:scale(1.04);pointer-events:none}
-#tlfBoot:before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 0%,rgba(255,255,255,.18),transparent 60%);pointer-events:none}
-#tlfBoot.tb-night:before{background:linear-gradient(180deg,rgba(15,23,42,.62),rgba(30,27,75,.28))}
-#tlfBoot.tb-evening:before{background:linear-gradient(180deg,rgba(124,45,18,.18),rgba(76,29,149,.22))}
-.tb-pat{position:absolute;inset:-80px;opacity:.55;pointer-events:none;animation:tbDrift 30s linear infinite}
-.tb-morning .tb-pat{background:repeating-conic-gradient(from 0deg at 50% 112%,rgba(255,255,255,.14) 0 5deg,transparent 5deg 15deg)}
-.tb-day .tb-pat{background-image:radial-gradient(rgba(255,255,255,.26) 1.7px,transparent 2.2px),radial-gradient(rgba(255,255,255,.13) 1px,transparent 1.6px);background-size:30px 30px,15px 15px;background-position:0 0,7px 7px}
-.tb-evening .tb-pat{background-image:repeating-radial-gradient(circle at 15% 115%,rgba(255,255,255,.15) 0 2px,transparent 2px 28px),repeating-radial-gradient(circle at 95% -10%,rgba(255,255,255,.08) 0 1px,transparent 1px 22px)}
-.tb-night .tb-pat{opacity:.9;background-image:radial-gradient(1.6px 1.6px at 12% 18%,#fff 60%,transparent 70%),radial-gradient(1.2px 1.2px at 68% 12%,#fff 60%,transparent 70%),radial-gradient(2px 2px at 82% 46%,#fff 60%,transparent 70%),radial-gradient(1.1px 1.1px at 36% 64%,#fff 60%,transparent 70%),radial-gradient(1.5px 1.5px at 54% 88%,#fff 60%,transparent 70%),radial-gradient(1px 1px at 92% 82%,#fff 60%,transparent 70%),radial-gradient(1.3px 1.3px at 24% 92%,#fff 60%,transparent 70%);background-size:260px 260px;animation:tbDrift 60s linear infinite,tbTwinkle 3.2s ease-in-out infinite alternate}
-.tb-blob{position:absolute;border-radius:50%;filter:blur(46px);opacity:.42;pointer-events:none;animation:tbFloat 13s ease-in-out infinite alternate}
-.tb-blob.b1{width:360px;height:360px;background:#FDE68A;top:-120px;left:-90px}
-.tb-blob.b2{width:320px;height:320px;background:#F0ABFC;bottom:-120px;right:-80px;animation-delay:-4s}
-.tb-blob.b3{width:240px;height:240px;background:#FECDD3;top:58%;left:-90px;animation-delay:-8s}
-.tb-night .tb-blob{opacity:.25}
-.tb-deco{position:absolute;top:calc(34px + env(safe-area-inset-top,0px));right:30px;font-size:58px;opacity:.85;filter:drop-shadow(0 8px 18px rgba(0,0,0,.18));animation:tbFloat 7s ease-in-out infinite alternate}
+/* V6.4.9: màn hình chờ – nền đêm, ánh sáng theo màu chủ đề, logo mới */
+#tlfBoot{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#EEF1F7;background:#05070B;font-family:'Be Vietnam Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;transition:opacity .5s ease,transform .5s ease;--tb1:#F26B3A;--tb2:#FF8A5C}
+#tlfBoot.out{opacity:0;transform:scale(1.03);pointer-events:none}
+.tb-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(900px 600px at 50% 38%,#121a2b 0%,transparent 62%)}
+.tb-bg i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:tbFloat 9s ease-in-out infinite alternate}
+.tb-bg .b1{width:420px;height:420px;left:-120px;top:-120px;background:#3F5BFF;opacity:.42}
+.tb-bg .b2{width:380px;height:380px;right:-130px;bottom:-140px;background:#8B5CF6;opacity:.36;animation-delay:-3s}
+.tb-bg .b3{width:240px;height:240px;left:55%;top:58%;background:#38BDF8;opacity:.12;animation-delay:-6s}
+.tb-bg:after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px;-webkit-mask-image:radial-gradient(circle at 50% 42%,#000,transparent 70%);mask-image:radial-gradient(circle at 50% 42%,#000,transparent 70%)}
 .tb-c{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px;max-width:92vw}
-.tb-orbit{position:relative;width:210px;height:210px;display:grid;place-items:center}
-.tb-ring{position:absolute;inset:0;border-radius:50%;border:1.5px dashed rgba(255,255,255,.5);animation:tbSpin 24s linear infinite}
-.tb-ring2{position:absolute;inset:30px;border-radius:50%;border:1px solid rgba(255,255,255,.28);box-shadow:0 0 60px rgba(255,255,255,.18) inset}
-.tb-sats{position:absolute;inset:0;animation:tbSpin 14s linear infinite}
-.tb-sat{position:absolute;width:42px;height:42px;margin:-21px;border-radius:15px;background:rgba(255,255,255,.94);display:grid;place-items:center;font-size:21px;line-height:1;box-shadow:0 10px 22px rgba(0,0,0,.16);animation:tbSpin 14s linear infinite reverse}
-.tb-sat.s1{left:50%;top:0}
-.tb-sat.s2{left:93.3%;top:75%}
-.tb-sat.s3{left:6.7%;top:75%}
-.tb-logo{width:96px;height:96px;border-radius:28px;box-shadow:0 0 0 6px rgba(255,255,255,.26);filter:drop-shadow(0 18px 30px rgba(0,0,0,.26));animation:tbPulse 2.6s ease-in-out infinite}
-.tb-logo svg,.tb-logo img{display:block;width:100%;height:100%}
-.tb-t{margin:34px 0 2px;font-size:34px;font-weight:800;letter-spacing:7px;line-height:1.1}
-.tb-tag{margin:2px 0 0;font-size:14px;letter-spacing:.3px}
-.tb-tag span{display:inline-block;opacity:.8;animation:tbGlow 3.6s ease-in-out infinite}
-.tb-tag span:nth-child(2){animation-delay:1.2s}
-.tb-tag span:nth-child(3){animation-delay:2.4s}
-.tb-hi{margin:18px 0 0;font-size:17px;font-weight:700;min-height:22px}
-.tb-bar{position:relative;width:210px;height:6px;border-radius:99px;background:rgba(255,255,255,.26);overflow:hidden;margin-top:16px}
-.tb-bar i{position:absolute;top:0;bottom:0;left:0;width:42%;border-radius:inherit;background:#fff;animation:tbLoad 1.5s ease-in-out infinite}
-.tb-step{margin:10px 0 0;font-size:12.5px;opacity:.88;min-height:18px;transition:opacity .25s}
-.tb-quote{position:absolute;left:24px;right:24px;bottom:calc(28px + env(safe-area-inset-bottom,0px));margin:0 auto;max-width:520px;text-align:center;font-size:13.5px;line-height:1.55;opacity:.92}
-.tb-quote b{display:block;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;opacity:.8;margin-bottom:3px}
-@keyframes tbSpin{to{transform:rotate(360deg)}}
-@keyframes tbDrift{from{transform:translate3d(0,0,0)}to{transform:translate3d(60px,40px,0)}}
-@keyframes tbFloat{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(30px,-24px,0) scale(1.08)}}
-@keyframes tbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-@keyframes tbGlow{0%,100%{opacity:.72}35%{opacity:1;text-shadow:0 0 14px rgba(255,255,255,.75)}}
-@keyframes tbLoad{0%{left:-45%}100%{left:105%}}
-@keyframes tbTwinkle{from{opacity:.55}to{opacity:1}}
-@media (max-width:420px){.tb-orbit{width:184px;height:184px}.tb-logo{width:84px;height:84px}.tb-t{font-size:30px}.tb-deco{font-size:46px;right:20px}}
-@media (prefers-reduced-motion:reduce){#tlfBoot *,#tlfBoot:before{animation:none!important}}
+.tb-ring{position:relative;width:132px;height:132px;display:grid;place-items:center}
+.tb-ring svg.tb-arc{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transform:rotate(-90deg);animation:tbSpin 1.6s linear infinite}
+.tb-arc circle{fill:none;stroke-width:3}
+.tb-arc .r0{stroke:rgba(255,255,255,.07)}
+.tb-arc .r1{stroke:var(--tb1);stroke-linecap:round;stroke-dasharray:90 260;filter:drop-shadow(0 0 6px var(--tb1))}
+.tb-logo{width:84px;height:84px;filter:drop-shadow(0 0 20px color-mix(in srgb,var(--tb1) 65%,transparent)) drop-shadow(0 10px 24px rgba(0,0,0,.6));animation:tbPulse 2.6s ease-in-out infinite}
+.tb-logo svg{display:block;width:100%;height:100%}
+.tb-t{margin:22px 0 2px;font-size:30px;font-weight:800;letter-spacing:.32em;padding-left:.32em;line-height:1.1;background:linear-gradient(90deg,#fff,color-mix(in srgb,var(--tb1) 55%,#fff));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tb-tag{margin:6px 0 0;font-size:13px;color:#8C95A8;letter-spacing:.3px}
+.tb-hi{margin:24px 0 0;font-size:15.5px;font-weight:600;min-height:20px;color:#EEF1F7}
+.tb-step{margin:8px 0 0;font-size:12.5px;color:#8C95A8;min-height:18px;transition:opacity .25s}
+.tb-quote{position:absolute;left:24px;right:24px;bottom:calc(28px + env(safe-area-inset-bottom,0px));margin:0 auto;max-width:460px;text-align:center;font-size:13px;line-height:1.55;color:#8C95A8}
+.tb-quote b{display:block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tb1);margin-bottom:3px;text-shadow:0 0 12px color-mix(in srgb,var(--tb1) 60%,transparent)}
+@keyframes tbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+@keyframes tbSpin{to{transform:rotate(270deg)}}
+@keyframes tbFloat{to{transform:translate3d(36px,26px,0) scale(1.08)}}
+@media (prefers-reduced-motion:reduce){#tlfBoot *{animation:none!important}}
 </style>
 </head>
 <body>
@@ -125,14 +105,14 @@
   })();
 </script>
 <div id="boot" class="screen">
-  <div id="tlfBoot" role="status" aria-label="TLF đang mở"><div class="tb-pat"></div><i class="tb-blob b1"></i><i class="tb-blob b2"></i><i class="tb-blob b3"></i><span class="tb-deco" id="tbDeco" aria-hidden="true"></span>
-    <div class="tb-c"><div class="tb-orbit"><i class="tb-ring"></i><i class="tb-ring2"></i><div class="tb-sats"><span class="tb-sat s1" title="Công việc">💼</span><span class="tb-sat s2" title="Học tập">📚</span><span class="tb-sat s3" title="Cuộc sống">🌿</span></div><div class="tb-logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="tbLg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--primary,#FB923C)"/><stop offset="1" style="stop-color:var(--primary-2,#E11D48)"/></linearGradient></defs><rect width="48" height="48" rx="14" fill="url(#tbLg)"/><path d="M8 10c10-6 26-6 32 0" stroke="#fff" stroke-opacity=".18" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M12.5 35.5C12 21 21 12.5 36 12c.8 14.5-8 23.5-23.5 23.5z" fill="#fff"/><path d="M12.5 35.5l9-9" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M19.5 25.5l4 4 8.5-9.5" stroke="url(#tbLg)" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="37" cy="33" r="2.6" fill="#fff" fill-opacity=".85"/></svg></div></div>
-      <div class="tb-t">TLF</div><p class="tb-tag"><span>Công việc</span> · <span>Học tập</span> · <span>Cuộc sống</span></p><p class="tb-hi" id="tbHi"></p><div class="tb-bar"><i></i></div><p class="tb-step" id="tbStep"></p></div>
+  <div id="tlfBoot" role="status" aria-label="TLF đang mở">
+    <div class="tb-bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+    <div class="tb-c"><div class="tb-ring"><svg class="tb-arc" viewBox="0 0 132 132" aria-hidden="true"><circle class="r0" cx="66" cy="66" r="62"/><circle class="r1" cx="66" cy="66" r="62"/></svg><div class="tb-logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="tbL9g" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--primary,#F26B3A)"/><stop offset="1" style="stop-color:var(--primary-2,#FF8A5C)"/></linearGradient><radialGradient id="tbL9b" cx="30%" cy="18%" r="95%"><stop offset="0" stop-color="#262E40"/><stop offset=".55" stop-color="#121722"/><stop offset="1" stop-color="#07090E"/></radialGradient></defs><rect width="48" height="48" rx="14" fill="url(#tbL9b)"/><rect x=".6" y=".6" width="46.8" height="46.8" rx="13.4" fill="none" stroke="url(#tbL9g)" stroke-opacity=".55" stroke-width="1.2"/><path d="M34.7 15A14 14 0 1 0 38 24" fill="none" stroke="url(#tbL9g)" stroke-width="3.3" stroke-linecap="round"/><path d="M16.6 24.4l5.1 5.1L33.2 17.7" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="37.7" cy="13.3" r="2.5" fill="url(#tbL9g)"/></svg></div></div>
+      <div class="tb-t">TLF</div><p class="tb-tag">Công việc · Học tập · Cuộc sống</p><p class="tb-hi" id="tbHi"></p><p class="tb-step" id="tbStep"></p></div>
     <p class="tb-quote" id="tbQuote"></p></div>
   <div class="slow" id="slow" hidden><p>Mạng hơi chậm, TLF vẫn đang mở…</p><button class="ghost" onclick="reloadApp()">Thử lại</button></div>
 </div>
-<script>
-(function () {
+<script>(function () {
   var b = document.getElementById('tlfBoot'); if (!b) return;
   window.__tlfBootT0 = Date.now();
   var h = new Date().getHours(), part = h >= 5 && h < 11 ? 'morning' : h >= 11 && h < 17 ? 'day' : h >= 17 && h < 20 ? 'evening' : 'night';
@@ -145,12 +125,12 @@
   if (h >= 11 && h < 13) hi = 'Chào buổi trưa';
   var name = String(cfg.name || '').slice(0, 30), el = function (id) { return document.getElementById(id); };
   if (el('tbHi')) el('tbHi').textContent = hi + (name ? ', ' + name : '') + (late ? ' – nhớ nghỉ ngơi nhé 🌙' : ' 👋');
-  if (el('tbDeco')) el('tbDeco').textContent = { morning: '🌤️', day: '☀️', evening: '🌇', night: '🌙' }[part];
   var Q = [['Mỗi ngày một chút', 'việc nhỏ làm đều đặn sẽ thành thành quả lớn.'], ['Hôm nay', 'chỉ cần tốt hơn hôm qua một chút là đủ.'], ['Kế hoạch rõ ràng', 'đầu óc nhẹ nhàng.'],
     ['Nghỉ ngơi', 'cũng là một phần của tiến bộ.'], ['Tiết kiệm từ khoản nhỏ', 'an tâm cho những ngày lớn.'], ['Người thương', 'dành cho họ chút thời gian hôm nay nhé.'],
     ['Học một chút mỗi ngày', 'hiểu sâu theo thời gian.'], ['Bắt đầu từ việc dễ nhất', 'để lấy đà cho cả ngày.'], ['Uống đủ nước', 'và nhớ mỉm cười nhé.'],
     ['Mẹo', 'gõ “Viết báo cáo mai 8h-10h” để tạo việc có giờ bắt đầu.'], ['Mẹo', 'gõ “ăn trưa 45k” ở ô thêm nhanh để ghi chi tiêu.'], ['Mẹo', 'Lịch → ✨ Xếp việc vào giờ trống để TLF tự tìm giờ làm việc.'],
-    ['Mẹo', 'bật “Tự động ghi” cho khoản chi hằng ngày trong Lịch trình chi tiêu.'], ['Một ngày được sắp xếp', 'là một ngày nhẹ nhõm.']];
+    ['Mẹo', 'bật “Tự động ghi” cho khoản chi hằng ngày trong Lịch trình chi tiêu.'], ['Một ngày được sắp xếp', 'là một ngày nhẹ nhõm.'],
+    ['Mẹo', 'trong Ghi chú, gõ @ để nhắc một việc, một người, một ngày giờ.'], ['Mẹo', 'nút ⋯ ở góc phải gom mọi tiện ích, chọn nút hiện ngoài trong Cài đặt.']];
   var q = Q[Math.floor(Math.random() * Q.length)];
   if (el('tbQuote')) el('tbQuote').innerHTML = '<b>' + q[0] + '</b>' + q[1];
   var steps = ['Đang mở không gian của bạn…', 'Đang đồng bộ với Google Sheets…', 'Đang sắp xếp lịch hôm nay…', 'Sắp xong rồi…'], i = 0;
