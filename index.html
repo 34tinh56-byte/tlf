@@ -6,36 +6,61 @@
 <title>TLF</title>
 <meta name="description" content="TLF – Công việc · Học tập · Cuộc sống">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="TLF">
-<meta name="theme-color" content="#0A0D14" id="themeColor">
+<meta name="theme-color" content="#F2F2F7" id="themeColor">
 <script>
-  // status bar colour: the TLF theme colour remembered from the last run (iPhone reads it while the app starts)
-  try { var tc = localStorage.getItem('tlf-theme-color'); if (tc && /^(rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\)|#[0-9a-fA-F]{3,8})$/.test(tc)) { document.getElementById('themeColor').setAttribute('content', tc); document.documentElement.style.background = tc; } } catch (e) {}
+  // V6.5: status bar + start screen = the colour of the TLF page last time (light, dark or glow); "Tự động" and a first start follow the phone.
+  // Painted before anything else, so the top of the screen is never black on a light page.
+  (function () {
+    try {
+      var C = /^(rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\)|#[0-9a-fA-F]{3,8})$/, de = document.documentElement;
+      var sys = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      var tc = localStorage.getItem('tlf-theme-color') || '', dk = localStorage.getItem('tlf-theme-dark'), auto = localStorage.getItem('tlf-theme-auto') === '1';
+      var known = C.test(tc) && (dk === '1' || dk === '0'), dark = auto || !known ? sys : dk === '1';
+      if (auto || !known) tc = dark ? '#000000' : '#F2F2F7';
+      document.getElementById('themeColor').setAttribute('content', tc);
+      de.style.setProperty('--sb', tc); de.style.backgroundColor = tc;
+      if (!dark) de.classList.add('lt-boot');
+    } catch (e) { /* storage blocked: light start */ }
+  })();
 </script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="apple-touch-startup-image" href="splash-1320x2868.png" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-1206x2622.png" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1320x2868.png" media="(prefers-color-scheme: dark) and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1320x2868.png" media="(prefers-color-scheme: light) and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1206x2622.png" media="(prefers-color-scheme: dark) and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1206x2622.png" media="(prefers-color-scheme: light) and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1290x2796.png" media="(prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1290x2796.png" media="(prefers-color-scheme: light) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1179x2556.png" media="(prefers-color-scheme: dark) and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1179x2556.png" media="(prefers-color-scheme: light) and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1284x2778.png" media="(prefers-color-scheme: dark) and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1284x2778.png" media="(prefers-color-scheme: light) and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1170x2532.png" media="(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1170x2532.png" media="(prefers-color-scheme: light) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1125x2436.png" media="(prefers-color-scheme: dark) and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1125x2436.png" media="(prefers-color-scheme: light) and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1242x2688.png" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1242x2688.png" media="(prefers-color-scheme: light) and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-828x1792.png" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-828x1792.png" media="(prefers-color-scheme: light) and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-750x1334.png" media="(prefers-color-scheme: dark) and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-750x1334.png" media="(prefers-color-scheme: light) and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1242x2208.png" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-1242x2208.png" media="(prefers-color-scheme: light) and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-640x1136.png" media="(prefers-color-scheme: dark) and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-l-640x1136.png" media="(prefers-color-scheme: light) and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <style>
   :root{--bg:#F6F7FB;--card:#FFFFFF;--text:#0F172A;--muted:#64748B;--line:#E2E8F0;--pri:#EA580C;--pri2:#E11D48;--brand:radial-gradient(120% 70% at 50% 0%,#18203A 0%,#090C14 55%,#05070B 100%)}
   @media (prefers-color-scheme: dark){:root{--bg:#0B1220;--card:#111A2E;--text:#E2E8F0;--muted:#94A3B8;--line:#1E293B}}
   *{box-sizing:border-box}
-  html{background:#05070B}
+  html{background:var(--sb,#F2F2F7)}
   html,body{margin:0;height:100%;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%;overscroll-behavior:none}
-  body{position:fixed;inset:0;overflow:hidden;background:var(--brand)}
-  #app{position:fixed;left:0;top:0;width:1px;min-width:100%;height:100%;border:0;background:var(--bg);opacity:0;transition:opacity .35s}
+  body{position:fixed;inset:0;overflow:hidden;background:var(--sb,#F2F2F7)}
+  #app{position:fixed;left:0;top:0;width:1px;min-width:100%;height:100%;border:0;background:var(--sb,#F2F2F7);opacity:0;transition:opacity .35s}
   #sa{position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
   #app.ready{opacity:1}
   .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(24px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));text-align:center;z-index:2;background:var(--brand);color:#fff;transition:opacity .35s;overflow:auto}
@@ -53,15 +78,22 @@
   .pri{width:100%;margin-top:12px;color:#fff;background:linear-gradient(135deg,#FB923C,var(--pri2))}
   .ghost{background:transparent;color:#fff;padding:10px}
   .screen>.pri{background:#fff;color:var(--pri)}
+  html.lt-boot .screen{background:#F2F2F7;color:#111114}
+  html.lt-boot .screen p{color:#3C3C43}
+  html.lt-boot .screen h1{color:#111114}
+  html.lt-boot .ghost{color:var(--pri)}
+  html.lt-boot .screen>.pri{background:linear-gradient(135deg,#FB923C,var(--pri2));color:#fff}
+  html.lt-boot .box{box-shadow:0 18px 50px rgba(0,0,0,.12)}
   .box .err{color:#DC2626}
   .err{color:#FEE2E2;font-size:13px;margin-top:8px;min-height:18px}
   ol{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:13.5px;line-height:1.6}
   .slow{margin-top:14px;font-size:14px}
-  /* V6.4.9: the same night splash as inside TLF, so opening the app flows straight into TLF's own start screen */
+  /* V6.5: the same start screen as inside TLF (night or light), so opening the app flows straight into TLF's own start screen */
   #boot{padding:0;background:none}
   #slow{position:fixed;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom));z-index:2147483001;display:flex;flex-direction:column;align-items:center}
   #slow[hidden]{display:none}
   #slow p{margin:0 0 4px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.25)}
+/* V6.4.9: màn hình chờ – nền đêm, ánh sáng theo màu chủ đề, logo mới */
 /* V6.4.9: màn hình chờ – nền đêm, ánh sáng theo màu chủ đề, logo mới */
 #tlfBoot{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#EEF1F7;background:#05070B;font-family:'Be Vietnam Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;transition:opacity .5s ease,transform .5s ease;--tb1:#F26B3A;--tb2:#FF8A5C}
 #tlfBoot.out{opacity:0;transform:scale(1.03);pointer-events:none}
@@ -89,6 +121,21 @@
 @keyframes tbSpin{to{transform:rotate(270deg)}}
 @keyframes tbFloat{to{transform:translate3d(36px,26px,0) scale(1.08)}}
 @media (prefers-reduced-motion:reduce){#tlfBoot *{animation:none!important}}
+/* V6.5: màn hình chờ sáng – nền Sáng, hoặc Tự động khi iPhone đang ở chế độ sáng */
+html.lt-boot{background:#F2F2F7}
+html.lt-boot #tlfBoot{color:#111114;background:#F2F2F7}
+html.lt-boot .tb-bg{background:radial-gradient(900px 600px at 50% 38%,#FFFFFF 0%,transparent 64%)}
+html.lt-boot .tb-bg .b1{background:#8FB0FF;opacity:.34}
+html.lt-boot .tb-bg .b2{background:#D2C4FF;opacity:.38}
+html.lt-boot .tb-bg .b3{background:var(--tb1);opacity:.12}
+html.lt-boot .tb-bg:after{background-image:radial-gradient(rgba(0,0,0,.055) 1px,transparent 1px)}
+html.lt-boot .tb-arc .r0{stroke:rgba(0,0,0,.07)}
+html.lt-boot .tb-arc .r1{filter:none}
+html.lt-boot .tb-logo{filter:drop-shadow(0 0 18px color-mix(in srgb,var(--tb1) 35%,transparent)) drop-shadow(0 10px 22px rgba(0,0,0,.16))}
+html.lt-boot .tb-t{background:none;color:#1C1C1E;-webkit-text-fill-color:#1C1C1E}
+html.lt-boot .tb-tag,html.lt-boot .tb-step,html.lt-boot .tb-quote{color:#6E6E73}
+html.lt-boot .tb-hi{color:#111114}
+html.lt-boot .tb-quote b{text-shadow:none}
 </style>
 </head>
 <body>
@@ -184,12 +231,18 @@
   var extra = 0;
   function screenH() { return window.innerHeight || document.documentElement.clientHeight || 0; }
   // status bar colour = TLF header colour
-  function setTheme(c) {
+  function setTheme(c, dark, auto) {
     if (!/^(rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\)|#[0-9a-fA-F]{3,8})$/.test(c)) return;
-    try { localStorage.setItem('tlf-theme-color', c); } catch (x) {}
+    try {
+      localStorage.setItem('tlf-theme-color', c);
+      if (typeof dark === 'boolean') localStorage.setItem('tlf-theme-dark', dark ? '1' : '0');
+      if (typeof auto === 'boolean') localStorage.setItem('tlf-theme-auto', auto ? '1' : '0');
+    } catch (x) {}
     var old = $('themeColor'), m = document.createElement('meta');   // a fresh tag: iOS notices a new tag more readily than a changed one
     m.name = 'theme-color'; m.id = 'themeColor'; m.content = c; old.parentNode.replaceChild(m, old);
-    document.documentElement.style.background = c; document.body.style.background = c;
+    var de = document.documentElement;   // iOS 26 colours the status bar from the page background
+    de.style.setProperty('--sb', c); de.style.backgroundColor = c; document.body.style.backgroundColor = c; frame.style.backgroundColor = c;
+    if (typeof dark === 'boolean') de.classList.toggle('lt-boot', !dark);
   }
   function sizeFrame() { frame.style.height = (screenH() + extra) + 'px'; }
   window.addEventListener('resize', function () { sizeFrame(); setTimeout(sendInsets, 60); });
@@ -243,7 +296,7 @@
       if (d.token && typeof d.token === 'string' && Number(d.exp) > Date.now()) store(KEY_TOKEN, JSON.stringify({ t: d.token, exp: Number(d.exp) }));
       else store(KEY_TOKEN, null);
     } else if (d.type === 'theme') {
-      setTheme(String(d.color || ''));
+      setTheme(String(d.color || ''), typeof d.dark === 'boolean' ? d.dark : undefined, typeof d.auto === 'boolean' ? d.auto : undefined);
     } else if (d.type === 'boot') {
       // V6.4.3: colours and first name for the start screen next time (checked: colours only, a short plain name)
       var C = /^(#[0-9a-fA-F]{3,8}|rgb\(\d{1,3}, ?\d{1,3}, ?\d{1,3}\))$/, p1 = String(d.p || ''), p2 = String(d.p2 || ''), nm = String(d.name || '').replace(/[<>&"'\u0000-\u001f]/g, '').slice(0, 30);

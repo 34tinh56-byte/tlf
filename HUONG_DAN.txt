@@ -1,15 +1,18 @@
-TLF App iPhone – cập nhật V6.4.9 (logo mới, màn hình chờ nền đêm)
+TLF App iPhone – cập nhật V6.5 (thanh trạng thái cùng màu với trang, màn hình chờ sáng)
 
-Bước này KHÔNG bắt buộc: TLF bên trong app đã đổi giao diện ngay khi bạn dán code V6.4.9 vào Apps Script.
-Làm thêm bước này để biểu tượng trên màn hình chính, ảnh khởi động và màn hình chờ của app cũng đổi theo.
+Bước này giúp phần trên cùng của màn hình (giờ, pin, sóng) KHÔNG còn bị đen khi bạn dùng nền Sáng:
+thanh trạng thái sẽ lấy đúng màu nền của TLF (Sáng, Tối, Phát sáng, hoặc Tự động theo iPhone).
 
 1. Trên GitHub, mở repo của app (34tinh56-byte/tlf) → Add file → Upload files.
 2. Kéo thả TẤT CẢ các file trong thư mục iphone này (ghi đè file cũ) → Commit changes:
-   index.html, sw.js, manifest.webmanifest, logo.svg, apple-touch-icon.png, icon-192.png, icon-512.png,
-   icon-maskable-512.png, favicon-32.png và 12 ảnh splash-*.png.
+   index.html, sw.js, manifest.webmanifest, logo.svg, các ảnh icon, 12 ảnh splash-*.png (nền tối)
+   và 12 ảnh splash-l-*.png (nền sáng – file mới).
    KHÔNG xóa hay sửa config.js (chứa link TLF của bạn) – thư mục này cố ý không có file đó.
-3. Đợi 1–2 phút cho GitHub Pages cập nhật, rồi trên iPhone mở app một lần khi có mạng
-   (đóng hẳn app rồi mở lại nếu vẫn thấy màn hình cũ).
-4. iOS chỉ đọc biểu tượng và ảnh khởi động lúc "Thêm vào Màn hình chính": muốn thấy logo mới,
-   xóa biểu tượng TLF cũ, mở link app bằng Safari → Chia sẻ → Thêm vào MH chính.
-   (Đăng nhập lại một lần nếu app hỏi – dữ liệu vẫn nằm trong Google Sheets của bạn.)
+3. Đợi 1–2 phút cho GitHub Pages cập nhật.
+4. BẮT BUỘC với bản này: iPhone chỉ đọc kiểu thanh trạng thái lúc "Thêm vào Màn hình chính".
+   Nhấn giữ biểu tượng TLF cũ → Xóa ứng dụng (chỉ xóa biểu tượng, dữ liệu vẫn ở Google Sheets),
+   mở link app bằng Safari → nút Chia sẻ → Thêm vào MH chính → mở TLF từ biểu tượng mới.
+5. Mở TLF một lần, chọn nền bạn thích (⋯ → Giao diện). Từ lần mở sau, cả màn hình chờ cũng đúng màu.
+   (Đăng nhập lại một lần nếu app hỏi.)
+   Chữ giờ / pin do iPhone tự chọn theo chế độ Sáng / Tối của máy: đẹp nhất khi nền TLF cùng chế độ
+   với iPhone – chọn nền "Tự động" là luôn khớp.
